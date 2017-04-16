@@ -1,12 +1,24 @@
 package project.agile.nbaapp;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+import java.util.Map;
+
+import project.agile.DataAnalysis.ReadCSV;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private MyDatabaseHelper dbHelper;
+
+    ArrayList<Map<String, String> > playerList;
+
 
     private Button player;
     private Button team;
@@ -18,6 +30,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        dbHelper = new MyDatabaseHelper(this,"NBA.db",null,1);
+        //创建或打开数据库
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        //向四个表插入数据
+        ReadCSV readCSV = new ReadCSV();
+        readCSV.Insert(db);
 
         player = (Button)findViewById(R.id.player);
         team = (Button)findViewById(R.id.team);
