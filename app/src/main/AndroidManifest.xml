@@ -15,17 +15,23 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".PlayerActivity"
+        <activity
+            android:name=".PlayerActivity"
             android:launchMode="singleTask">
         </activity>
-        <activity android:name=".TeamActivity"
-                  android:launchMode="singleTask">
-        </activity>
-        <activity android:name=".CoachActivity"
+        <activity
+            android:name=".TeamActivity"
             android:launchMode="singleTask">
         </activity>
-        <activity android:name=".ArenaActivity"
+        <activity
+            android:name=".CoachActivity"
             android:launchMode="singleTask">
+        </activity>
+        <activity
+            android:name=".ArenaActivity"
+            android:launchMode="singleTask">
+        </activity>
+        <activity android:name=".Detail_PlayerActivity">
         </activity>
     </application>
 
