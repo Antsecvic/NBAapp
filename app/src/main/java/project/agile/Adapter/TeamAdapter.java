@@ -7,11 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import project.agile.Object.Team;
-import project.agile.nbaapp.Player;
 import project.agile.nbaapp.R;
 
 /**
@@ -21,7 +19,7 @@ public class TeamAdapter extends ArrayAdapter<Team>{
     private int resourceId;
 
     public TeamAdapter(Context context, int textViewResourceId,
-                         List<Player> objects){
+                         List<Team> objects){
         super(context,textViewResourceId,objects);
         resourceId = textViewResourceId;
     }
@@ -41,8 +39,8 @@ public class TeamAdapter extends ArrayAdapter<Team>{
             view = convertView;
             viewHolder = (ViewHolder)view.getTag();
         }
-        viewHolder.playerName.setText(player.getName());
-        viewHolder.birthYear.setText(player.getBirthYear());
+        viewHolder.playerName.setText(team.getTeamName());
+        viewHolder.birthYear.setText(team.getTeamFrom()+"-"+team.getTeamTo());
         return view;
     }
 

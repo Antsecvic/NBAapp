@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import project.agile.nbaapp.Player;
+import project.agile.Object.Arena;
 import project.agile.nbaapp.R;
 
 /**
@@ -18,34 +18,34 @@ import project.agile.nbaapp.R;
 public class ArenaAdapter extends ArrayAdapter<Arena>{
     private int resourceId;
 
-    public PlayerAdapter(Context context, int textViewResourceId,
-                         List<Player> objects){
+    public ArenaAdapter(Context context, int textViewResourceId,
+                         List<Arena> objects){
         super(context,textViewResourceId,objects);
         resourceId = textViewResourceId;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Player player = getItem(position);
+        Arena arena = getItem(position);
         View view;
         ViewHolder viewHolder;
         if(convertView == null){
             view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
             viewHolder = new ViewHolder();
-            viewHolder.playerName = (TextView)view.findViewById(R.id.playerName);
-            viewHolder.birthYear = (TextView)view.findViewById(R.id.birthYear);
+            viewHolder.arenaName = (TextView)view.findViewById(R.id.arenaName);
+            viewHolder.arenaLocation = (TextView)view.findViewById(R.id.arenaLocation);
             view.setTag(viewHolder);
         }else{
             view = convertView;
             viewHolder = (ViewHolder)view.getTag();
         }
-        viewHolder.playerName.setText(player.getName());
-        viewHolder.birthYear.setText(player.getBirthYear());
+        viewHolder.arenaName.setText(arena.getArenaName());
+        viewHolder.arenaLocation.setText(arena.getArenaLocation());
         return view;
     }
 
     class ViewHolder{
-        TextView playerName;
-        TextView birthYear;
+        TextView arenaName;
+        TextView arenaLocation;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="project.agile.nbaapp">
+    package="project.agile.nbaapp">
 
     <application
         android:allowBackup="true"
@@ -10,29 +10,27 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".PlayerActivity"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask" />
         <activity
             android:name=".TeamActivity"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask" />
         <activity
             android:name=".CoachActivity"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask" />
         <activity
             android:name=".ArenaActivity"
-            android:launchMode="singleTask">
-        </activity>
-        <activity android:name=".Detail_PlayerActivity">
-        </activity>
+            android:launchMode="singleTask" />
+        <activity android:name=".Detail_PlayerActivity" />
+        <activity android:name=".Detail_TeamActivity" />
+        <activity android:name=".Detail_ArenaActivity" />
+        <activity android:name=".Detail_CoachActivity"></activity>
     </application>
 
 </manifest>

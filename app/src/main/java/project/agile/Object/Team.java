@@ -7,5 +7,31 @@ import java.io.Serializable;
  */
 public class Team implements Serializable{
     private String teamName;
+    private int teamFrom;
+    private int teamTo;
+
+    public void setTeamTo(int teamTo) {
+        this.teamTo = teamTo;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public void setTeamFrom(int teamFrom) {
+        this.teamFrom = teamFrom;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public int getTeamFrom() {
+        return teamFrom;
+    }
+
+    public int getTeamTo() {
+        return teamTo;
+    }
 
 }

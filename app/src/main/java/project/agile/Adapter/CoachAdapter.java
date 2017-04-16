@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import project.agile.nbaapp.Player;
+import project.agile.Object.Coach;
 import project.agile.nbaapp.R;
 
 /**
@@ -18,34 +18,31 @@ import project.agile.nbaapp.R;
 public class CoachAdapter extends ArrayAdapter<Coach> {
     private int resourceId;
 
-    public PlayerAdapter(Context context, int textViewResourceId,
-                         List<Player> objects){
+    public CoachAdapter(Context context, int textViewResourceId,
+                         List<Coach> objects){
         super(context,textViewResourceId,objects);
         resourceId = textViewResourceId;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Player player = getItem(position);
+        Coach player = getItem(position);
         View view;
         ViewHolder viewHolder;
         if(convertView == null){
             view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
             viewHolder = new ViewHolder();
-            viewHolder.playerName = (TextView)view.findViewById(R.id.playerName);
-            viewHolder.birthYear = (TextView)view.findViewById(R.id.birthYear);
+            viewHolder.coachName = (TextView)view.findViewById(R.id.coachName);
             view.setTag(viewHolder);
         }else{
             view = convertView;
             viewHolder = (ViewHolder)view.getTag();
         }
-        viewHolder.playerName.setText(player.getName());
-        viewHolder.birthYear.setText(player.getBirthYear());
+        viewHolder.coachName.setText(player.getCoachName());
         return view;
     }
 
     class ViewHolder{
-        TextView playerName;
-        TextView birthYear;
+        TextView coachName;
     }
 }

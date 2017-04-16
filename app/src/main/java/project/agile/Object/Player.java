@@ -24,4 +24,13 @@ public class Player implements Serializable {
     public int getBirthYear(){
         return birthYear;
     }
+
+    public String getAge(){
+        return age;
+    }
+
+    public void setAge(String age)
+    {
+        this.age = age;
+    }
 }
