@@ -32,20 +32,20 @@ public class TeamAdapter extends ArrayAdapter<Team>{
         if(convertView == null){
             view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
             viewHolder = new ViewHolder();
-            viewHolder.playerName = (TextView)view.findViewById(R.id.playerName);
-            viewHolder.birthYear = (TextView)view.findViewById(R.id.birthYear);
+            viewHolder.teamName = (TextView)view.findViewById(R.id.teamName);
+            viewHolder.teamFromTo = (TextView)view.findViewById(R.id.teamFromTo);
             view.setTag(viewHolder);
         }else{
             view = convertView;
             viewHolder = (ViewHolder)view.getTag();
         }
-        viewHolder.playerName.setText(team.getTeamName());
-        viewHolder.birthYear.setText(team.getTeamFrom()+"-"+team.getTeamTo());
+        viewHolder.teamName.setText(team.getTeamName());
+        viewHolder.teamFromTo.setText(team.getTeamFrom()+"-"+team.getTeamTo());
         return view;
     }
 
     class ViewHolder{
-        TextView playerName;
-        TextView birthYear;
+        TextView teamName;
+        TextView teamFromTo;
     }
 }

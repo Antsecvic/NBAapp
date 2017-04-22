@@ -33,19 +33,19 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
             view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
             viewHolder = new ViewHolder();
             viewHolder.playerName = (TextView)view.findViewById(R.id.playerName);
-            viewHolder.birthYear = (TextView)view.findViewById(R.id.birthYear);
+            viewHolder.playerAge = (TextView)view.findViewById(R.id.playerAge);
             view.setTag(viewHolder);
         }else{
             view = convertView;
             viewHolder = (ViewHolder)view.getTag();
         }
         viewHolder.playerName.setText(player.getName());
-        viewHolder.birthYear.setText(player.getBirthYear());
+        viewHolder.playerAge.setText(player.getAge()+" years old");
         return view;
     }
 
     class ViewHolder{
         TextView playerName;
-        TextView birthYear;
+        TextView playerAge;
     }
 }

@@ -1,6 +1,8 @@
 package project.agile.nbaapp;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,6 +14,7 @@ import java.util.List;
 
 import project.agile.Adapter.ArenaAdapter;
 import project.agile.Object.Arena;
+import project.agile.util.SQLdm;
 
 import static project.agile.nbaapp.R.id.playerList;
 
@@ -24,6 +27,18 @@ public class ArenaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_arena);
 
         //初始化arenaList
+        SQLdm s = new SQLdm();
+        final SQLiteDatabase db = s.openDatabase(getApplicationContext());
+        Cursor cursor = db.rawQuery("select Arena, ArenaLocation from Arena", new String[] { });
+        if(cursor.moveToFirst()){
+            do {
+                Arena arena = new Arena();
+                arena.setArenaName(cursor.getString(cursor.getColumnIndex("Arena")));
+                arena.setArenaLocation(cursor.getString(cursor.getColumnIndex("ArenaLocation")));
+                arenaList.add(arena);
+            }while(cursor.moveToNext());
+            cursor.close();
+        }
 
 
         ArenaAdapter arenaAdapter = new ArenaAdapter(this,R.layout.arena_item,

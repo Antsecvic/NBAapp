@@ -3,26 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="horizontal">
         <Button
-            android:id="@+id/player"
+            android:id="@+id/player_button"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/player"
             android:layout_margin="5dp"/>
         <Button
-            android:id="@+id/team"
-            android:layout_weight="1"
+            android:id="@+id/coach_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/team"
+            android:layout_weight="1"
+            android:background="@drawable/coach"
             android:layout_margin="5dp"/>
 
 
@@ -32,21 +32,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <Button
-            android:id="@+id/coach"
+            android:id="@+id/team_button"
+            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/coach"
+            android:background="@drawable/team"
             android:layout_margin="5dp"/>
         <Button
-            android:id="@+id/arena"
+            android:id="@+id/arena_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/arena"
             android:layout_margin="5dp"/>
     </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/refresh_button"
+        android:text="更新数据"/>
+
 </LinearLayout>
