@@ -39,8 +39,8 @@ public class TeamAdapter extends ArrayAdapter<Team>{
             view = convertView;
             viewHolder = (ViewHolder)view.getTag();
         }
-        viewHolder.teamName.setText(team.getTeamName());
-        viewHolder.teamFromTo.setText(team.getTeamFrom()+"-"+team.getTeamTo());
+        viewHolder.teamName.setText(team.getName());
+        viewHolder.teamFromTo.setText(team.getFrom()+"-"+team.getTo());
         return view;
     }
 

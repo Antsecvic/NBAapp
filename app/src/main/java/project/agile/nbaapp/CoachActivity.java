@@ -28,7 +28,7 @@ public class CoachActivity extends AppCompatActivity {
         //初始化coachList
         SQLdm s = new SQLdm();
         final SQLiteDatabase db = s.openDatabase(getApplicationContext());
-        Cursor cursor = db.rawQuery("select TeamCoach from Coach", new String[] { });
+        Cursor cursor = db.rawQuery("select distinct TeamCoach from Coach", new String[] { });
         if(cursor.moveToFirst()){
             do {
                 Coach coach = new Coach();

@@ -40,7 +40,7 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
             viewHolder = (ViewHolder)view.getTag();
         }
         viewHolder.playerName.setText(player.getName());
-        viewHolder.playerAge.setText(player.getAge()+" years old");
+        viewHolder.playerAge.setText(player.getBirthYear()+" years old");
         return view;
     }
 

@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 public class Coach implements Serializable {
     private String coachName;
+    private CoachInOneSeason[] career;
 
     public String getCoachName() {
         return coachName;
@@ -16,4 +17,11 @@ public class Coach implements Serializable {
         this.coachName = coachName;
     }
 
+    public CoachInOneSeason[] getCareer() {
+        return career;
+    }
+
+    public void setCareer(CoachInOneSeason[] career) {
+        this.career = career;
+    }
 }
