@@ -29,7 +29,7 @@ public class ArenaActivity extends AppCompatActivity {
         //初始化arenaList
         SQLdm s = new SQLdm();
         final SQLiteDatabase db = s.openDatabase(getApplicationContext());
-        Cursor cursor = db.rawQuery("select distinct Arena, ArenaLocation from Arena", new String[] { });
+        Cursor cursor = db.rawQuery("select distinct Arena, ArenaLocation from Arena order by Arena", new String[] { });
         if(cursor.moveToFirst()){
             do {
                 Arena arena = new Arena();

@@ -5,41 +5,52 @@ package project.agile.Object;
  */
 
 public class PlayerInOneSeason {
-    private Player mPlayer;
-    private double season;
-    private Team mTeam;
-    private double games;
+    private String season;
+    private String league;
+    private String teamAbbr;
+    private int games;
     private double points;
+    private double ppg;
 
-    public Player getPlayer() {
-        return mPlayer;
+    public PlayerInOneSeason(String season, String league, String teamAbbr, int games, double points, double ppg) {
+        this.season = season;
+        this.league = league;
+        this.teamAbbr = teamAbbr;
+        this.games = games;
+        this.points = points;
+        this.ppg = ppg;
     }
 
-    public void setPlayer(Player player) {
-        mPlayer = player;
-    }
+    public String getSeason() {
 
-    public double getSeason() {
         return season;
     }
 
-    public void setSeason(double season) {
+    public void setSeason(String season) {
         this.season = season;
     }
 
-    public Team getTeam() {
-        return mTeam;
+    public String getLeague() {
+        return league;
     }
 
-    public void setTeam(Team team) {
-        mTeam = team;
+    public void setLeague(String league) {
+        this.league = league;
     }
 
-    public double getGames() {
+    public String getTeamAbbr() {
+        return teamAbbr;
+    }
+
+    public void setTeamAbbr(String teamAbbr) {
+        this.teamAbbr = teamAbbr;
+    }
+
+    public int getGames() {
         return games;
     }
 
-    public void setGames(double games) {
+    public void setGames(int games) {
         this.games = games;
     }
 
@@ -49,5 +60,13 @@ public class PlayerInOneSeason {
 
     public void setPoints(double points) {
         this.points = points;
+    }
+
+    public double getPpg() {
+        return ppg;
+    }
+
+    public void setPpg(double ppg) {
+        this.ppg = ppg;
     }
 }

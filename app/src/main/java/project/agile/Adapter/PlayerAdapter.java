@@ -32,20 +32,20 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
         if(convertView == null){
             view = LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
             viewHolder = new ViewHolder();
-            viewHolder.playerName = (TextView)view.findViewById(R.id.playerName);
-            viewHolder.playerAge = (TextView)view.findViewById(R.id.playerAge);
+            viewHolder.name = (TextView)view.findViewById(R.id.playerName);
+            viewHolder.birthYear = (TextView)view.findViewById(R.id.playerBirth);
             view.setTag(viewHolder);
         }else{
             view = convertView;
             viewHolder = (ViewHolder)view.getTag();
         }
-        viewHolder.playerName.setText(player.getName());
-        viewHolder.playerAge.setText(player.getBirthYear()+" years old");
+        viewHolder.name.setText(player.getName());
+        viewHolder.birthYear.setText(player.getBirthYear()+"");
         return view;
     }
 
     class ViewHolder{
-        TextView playerName;
-        TextView playerAge;
+        TextView name;
+        TextView birthYear;
     }
 }

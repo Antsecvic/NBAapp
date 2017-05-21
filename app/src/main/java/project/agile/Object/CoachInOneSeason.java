@@ -12,7 +12,6 @@ public class CoachInOneSeason {
     public double getSeason() {
         return season;
     }
-
     public void setSeason(double season) {
         this.season = season;
     }
@@ -20,7 +19,6 @@ public class CoachInOneSeason {
     public Team getTeam() {
         return mTeam;
     }
-
     public void setTeam(Team team) {
         mTeam = team;
     }
@@ -28,7 +26,6 @@ public class CoachInOneSeason {
     public Coach getCoach() {
         return mCoach;
     }
-
     public void setCoach(Coach coach) {
         mCoach = coach;
     }

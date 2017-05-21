@@ -42,102 +42,6 @@ public class ReadCSV {
 	Map<List<String>, List<String>> coach;
 	Map<List<String>, List<String>> arena;
 
-	/*public void readFile(SQLiteDatabase db, String fileName){
-		try {
-			ContentValues values = new ContentValues();
-			CSVReader reader;
-			// 读取球队信息并存入数据库
-			reader = new CSVReader(new FileReader(filePath + "/" + fileName));
-			String[] nextLine;
-			nextLine = reader.readNext();
-			nextLine = reader.readNext();
-			while ((nextLine = reader.readNext()) != null) {
-				values.put(LEAGUE, nextLine[5]);
-				values.put(TEAMABBR, nextLine[4]);
-				values.put(TEAMNAME, nextLine[10]);
-				values.put(TEAMFROM, nextLine[12]);
-				values.put(TEAMTO, nextLine[13]);
-				values.put(TEAMG, nextLine[15]);
-				values.put(TEAMW, nextLine[16]);
-				values.put(TEAML, nextLine[17]);
-				values.put(TEAMCHAMP, nextLine[18]);
-				db.beginTransaction();
-				try {
-					db.insert("Team", null, values);
-					db.setTransactionSuccessful();
-				}catch (Exception e){
-					return ;
-				}finally {
-					db.endTransaction();
-				}
-				values.clear();
-			}
-
-			// 读取其他信息并存入数据库
-			reader = new CSVReader(new FileReader(filePath + "/" + fileName));
-			nextLine = reader.readNext();
-			nextLine = reader.readNext();
-			while ((nextLine = reader.readNext()) != null) {
-				String[] seasonStr = nextLine[2].split("-");
-				double season = Double.parseDouble(seasonStr[1]);
-				double age = (nextLine[3].matches("\\d+")) ? Double.parseDouble(nextLine[3]) : season - 1;
-
-				// if age is null, then birth year is 0
-				double birthYear = season - age - 1;
-
-				values.put(PLAYER,nextLine[1]);
-				values.put(BIRTH,birthYear+"");
-				values.put(SEASON,seasonStr[1]);
-				values.put(LEAGUE,nextLine[5]);
-				values.put(TEAMABBR,nextLine[4]);
-				values.put(GAMENUM,nextLine[6]);
-				values.put(PTS,nextLine[7]);
-				db.beginTransaction();
-				try {
-					db.insert("Player", null, values);
-					db.setTransactionSuccessful();
-				}catch (Exception e){
-					return ;
-				}finally {
-					db.endTransaction();
-				}
-				values.clear();
-
-				String[] str = nextLine[11].split("  ");
-				for (String s : str) {
-					values.put(TEAMCOACH,s);
-					values.put(TEAMSEASON,seasonStr[1]);
-					values.put(TEAMABBR,nextLine[5]);
-					values.put(LEAGUE,nextLine[4]);
-					db.beginTransaction();
-					try {
-						db.insert("Coach", null, values);
-						db.setTransactionSuccessful();
-					}catch (Exception e){
-						return ;
-					}finally {
-						db.endTransaction();
-					}
-					values.clear();
-				}
-
-				String[] startEndStr = nextLine[2].split("-");
-				if (nextLine[21].length() != 0) {
-					values.put(ARENA,nextLine[21]);
-					values.put(ARENASTART,startEndStr[0]);
-					values.put(ARENAEND,startEndStr[1]);
-					values.put(LEAGUE,nextLine[5]);
-					values.put(TEAMABBR,nextLine[4]);
-					values.put(ARENALOCATION,nextLine[22]);
-					values.put(ARENACAPACITY,nextLine[23]);
-					values.clear();
-				}
-			}
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-	}*/
-
 	public void readFile(String fileName) {
 		try {
 			CSVReader reader;
@@ -304,7 +208,7 @@ public class ReadCSV {
 			nextLine = reader.readNext();
 			while ((nextLine = reader.readNext()) != null) {
 				String[] seasonStr = nextLine[2].split("-");
-				double season = Double.parseDouble(seasonStr[1]);				
+				double season = Double.parseDouble(seasonStr[1]);
 				double age = (nextLine[3].matches("\\d+")) ? Double.parseDouble(nextLine[3]) : season - 1;
 	
 				// if age is null, then birth year is 0
@@ -319,14 +223,14 @@ public class ReadCSV {
 	//			System.out.println(name + " " + birthYear + " " + season + " " + league + " " + attr + " " + games + " " + points);
 				List<String> la = new ArrayList<String>();
 				la.add(name);
-				la.add(birthYear + "");
-				la.add(season + "");
+				la.add((int)birthYear + "");
+				la.add((int)season + "");
 				
 				List<String> lb = new ArrayList<String>();
 				lb.add(league);
 				lb.add(attr);
-				lb.add(games + "");
-				lb.add(points + "");
+				lb.add((int)games + "");
+				lb.add((int)points + "");
 				
 				player.put(la, lb);
 				
@@ -355,7 +259,7 @@ public class ReadCSV {
 				for (String s : str) {
 					if (s.length() != 0) {
 						List<String> la = new ArrayList<String>();
-						la.add(s);
+						la.add(s.trim());
 						la.add(season + "");
 						
 						List<String> lb = new ArrayList<String>();

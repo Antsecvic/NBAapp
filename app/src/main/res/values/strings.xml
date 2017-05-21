@@ -5,4 +5,15 @@
     <string name="file_name">2017敏捷作业-NBA数据.csv</string>
     <string name="loading_title">数据加载中</string>
     <string name="loading_message">Loading...</string>
+
+    <string name="season">赛季</string>
+    <string name="league">联盟</string>
+    <string name="team">球队</string>
+    <string name="game_num">出场数</string>
+    <string name="points">总分</string>
+    <string name="ppg">场均</string>
+
+    <string name="games">总场数</string>
+    <string name="wins">胜场数</string>
+    <string name="loses">负场数</string>
 </resources>
