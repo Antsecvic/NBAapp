@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -16,19 +19,24 @@ import project.agile.Adapter.ArenaAdapter;
 import project.agile.Object.Arena;
 import project.agile.util.SQLdm;
 
-import static project.agile.nbaapp.R.id.playerList;
+/**
+ * Created by Oneplus on 2017/5/25.
+ */
 
-public class ArenaActivity extends AppCompatActivity {
+public class ArenaFragment  extends Fragment {
 
     private List<Arena> arenaList = new ArrayList<>();
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_arena);
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_common,container,false);
+        ListView arenaListView = (ListView) view.findViewById(R.id.fragment_list);
+
+        arenaList.clear();
         //初始化arenaList
         SQLdm s = new SQLdm();
-        final SQLiteDatabase db = s.openDatabase(getApplicationContext());
+        final SQLiteDatabase db = s.openDatabase(getContext());
         Cursor cursor = db.rawQuery("select distinct Arena, ArenaLocation from Arena order by Arena", new String[] { });
         if(cursor.moveToFirst()){
             do {
@@ -41,15 +49,14 @@ public class ArenaActivity extends AppCompatActivity {
         }
 
 
-        ArenaAdapter arenaAdapter = new ArenaAdapter(this,R.layout.arena_item,
+        ArenaAdapter arenaAdapter = new ArenaAdapter(getActivity(),R.layout.arena_item,
                 arenaList);
 
-        final ListView listView = (ListView) findViewById(playerList);
-        listView.setAdapter(arenaAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        arenaListView.setAdapter(arenaAdapter);
+        arenaListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ArenaActivity.this, Detail_ArenaActivity.class);
+                Intent intent = new Intent(getActivity(), Detail_ArenaActivity.class);
                 String arenaName = arenaList.get(position).getArenaName();
                 String arenaLocation = arenaList.get(position).getArenaLocation();
 
@@ -62,5 +69,8 @@ public class ArenaActivity extends AppCompatActivity {
 
             }
         });
+
+        return view;
     }
+
 }

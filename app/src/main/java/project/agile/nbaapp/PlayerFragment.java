@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -16,18 +19,20 @@ import project.agile.Adapter.PlayerAdapter;
 import project.agile.Object.Player;
 import project.agile.util.SQLdm;
 
-public class PlayerActivity extends AppCompatActivity {
+public class PlayerFragment extends Fragment {
 
     private List<Player> playerList = new ArrayList<>();
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_common,container,false);
+        ListView playerListView = (ListView) view.findViewById(R.id.fragment_list);
 
+        playerList.clear();
         //初始化playerList
         SQLdm s = new SQLdm();
-        final SQLiteDatabase db = s.openDatabase(getApplicationContext());
+        final SQLiteDatabase db = s.openDatabase(getContext());
         Cursor cursor = db.rawQuery("select distinct Player,Birth from Player order by Player", new String[] { });
 
         if(cursor.moveToFirst()){
@@ -41,15 +46,13 @@ public class PlayerActivity extends AppCompatActivity {
             cursor.close();
         }
 
-        PlayerAdapter playerAdapter = new PlayerAdapter(this,R.layout.player_item,
-                playerList);
+        PlayerAdapter playerAdapter = new PlayerAdapter(getContext(),R.layout.player_item, playerList);
 
-        final ListView listView = (ListView) findViewById(R.id.playerList);
-        listView.setAdapter(playerAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        playerListView.setAdapter(playerAdapter);
+        playerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(PlayerActivity.this, Detail_PlayerActivity.class);
+                Intent intent = new Intent(getActivity(), Detail_PlayerActivity.class);
                 String name = playerList.get(position).getName();
                 int birthYear = playerList.get(position).getBirthYear();
 
@@ -62,5 +65,7 @@ public class PlayerActivity extends AppCompatActivity {
 
             }
         });
+
+        return view;
     }
 }
