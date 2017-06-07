@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +33,10 @@ public class TeamFragment  extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d("yijiashishabi", "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_common,container,false);
-        ListView teamListView = (ListView) view.findViewById(R.id.fragment_list);
+        final ListView teamListView = (ListView) view.findViewById(R.id.fragment_list);
+        SearchView search = (SearchView) view.findViewById(R.id.search);
 
         teamList.clear();
         //初始化teamList
@@ -55,7 +60,7 @@ public class TeamFragment  extends Fragment {
             cursor.close();
         }
 
-        TeamAdapter teamAdapter = new TeamAdapter(getActivity(),R.layout.team_item,
+        final TeamAdapter teamAdapter = new TeamAdapter(getActivity(),R.layout.team_item,
                 teamList);
 
         teamListView.setAdapter(teamAdapter);
@@ -71,6 +76,29 @@ public class TeamFragment  extends Fragment {
             }
         });
 
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("diujiong", "submit");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d("diujiong", newText);
+                teamAdapter.notifyDataSetChanged();
+                if (!TextUtils.isEmpty(newText)){
+                    teamAdapter.getFilter().filter(newText.toString());
+
+                }else{
+//                    arenaAdapter.getFilter().filter("");
+                    teamListView.clearTextFilter();
+
+                }
+                return true;
+            }
+        });
         return view;
     }
 

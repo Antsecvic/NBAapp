@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,30 +26,32 @@ public class PlayerFragment extends Fragment {
 
     private List<Player> playerList = new ArrayList<>();
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_common,container,false);
-        ListView playerListView = (ListView) view.findViewById(R.id.fragment_list);
+        View view = inflater.inflate(R.layout.fragment_common, container, false);
+        final ListView playerListView = (ListView) view.findViewById(R.id.fragment_list);
+        SearchView search = (SearchView) view.findViewById(R.id.search);
 
         playerList.clear();
         //初始化playerList
         SQLdm s = new SQLdm();
         final SQLiteDatabase db = s.openDatabase(getContext());
-        Cursor cursor = db.rawQuery("select distinct Player,Birth from Player order by Player", new String[] { });
+        Cursor cursor = db.rawQuery("select distinct Player,Birth from Player order by Player", new String[]{});
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             do {
                 String name = cursor.getString(cursor.getColumnIndex("Player"));
                 int birth = cursor.getInt(cursor.getColumnIndex("Birth"));
                 Player player = new Player(name, birth);
                 playerList.add(player);
-            }while(cursor.moveToNext());
+            } while (cursor.moveToNext());
 
             cursor.close();
         }
 
-        PlayerAdapter playerAdapter = new PlayerAdapter(getContext(),R.layout.player_item, playerList);
+        final PlayerAdapter playerAdapter = new PlayerAdapter(getContext(), R.layout.player_item, playerList);
 
         playerListView.setAdapter(playerAdapter);
         playerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -57,8 +62,8 @@ public class PlayerFragment extends Fragment {
                 int birthYear = playerList.get(position).getBirthYear();
 
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("Name",name);
-                bundle.putSerializable("BirthYear",birthYear);
+                bundle.putSerializable("Name", name);
+                bundle.putSerializable("BirthYear", birthYear);
 
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -66,6 +71,32 @@ public class PlayerFragment extends Fragment {
             }
         });
 
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("diujiong", "submit");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d("diujiong", newText);
+                playerAdapter.notifyDataSetChanged();
+                if (!TextUtils.isEmpty(newText)){
+                    playerAdapter.getFilter().filter(newText.toString());
+
+                }else{
+//                    arenaAdapter.getFilter().filter("");
+                    playerListView.clearTextFilter();
+
+                }
+                return true;
+            }
+        });
+
         return view;
     }
 }
+
+
+

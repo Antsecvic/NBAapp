@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +30,13 @@ public class ArenaFragment  extends Fragment {
 
     private List<Arena> arenaList = new ArrayList<>();
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_common,container,false);
-        ListView arenaListView = (ListView) view.findViewById(R.id.fragment_list);
+        final ListView arenaListView = (ListView) view.findViewById(R.id.fragment_list);
+        SearchView search = (SearchView) view.findViewById(R.id.search);
 
         arenaList.clear();
         //初始化arenaList
@@ -45,11 +50,12 @@ public class ArenaFragment  extends Fragment {
                 arena.setArenaLocation(cursor.getString(cursor.getColumnIndex("ArenaLocation")));
                 arenaList.add(arena);
             }while(cursor.moveToNext());
+
             cursor.close();
         }
 
 
-        ArenaAdapter arenaAdapter = new ArenaAdapter(getActivity(),R.layout.arena_item,
+        final ArenaAdapter arenaAdapter;arenaAdapter = new ArenaAdapter(getActivity(),R.layout.arena_item,
                 arenaList);
 
         arenaListView.setAdapter(arenaAdapter);
@@ -69,6 +75,31 @@ public class ArenaFragment  extends Fragment {
 
             }
         });
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("diujiong", "submit");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d("diujiong", newText);
+                arenaAdapter.notifyDataSetChanged();
+                if (!TextUtils.isEmpty(newText)){
+                    arenaAdapter.getFilter().filter(newText.toString());
+
+                }else{
+//                    arenaAdapter.getFilter().filter("");
+                    arenaListView.clearTextFilter();
+
+                }
+                return true;
+            }
+        });
+
+
 
         return view;
     }
