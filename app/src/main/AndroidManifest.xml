@@ -13,10 +13,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".WelcomeActivity"
+        <activity
+            android:name=".WelcomeActivity"
             android:label="猫扑NBA"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Start" >
+            android:theme="@style/Theme.Start">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,6 +29,10 @@
         <activity android:name=".Detail_TeamActivity" />
         <activity android:name=".Detail_ArenaActivity" />
         <activity android:name=".Detail_CoachActivity" />
+        <activity
+            android:name=".Stat2_Activity"
+            android:label="数据图表"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
