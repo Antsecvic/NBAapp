@@ -72,7 +72,6 @@ public class TeamFragment  extends Fragment {
                 bundle.putSerializable("team",teamList.get(position));
                 intent.putExtras(bundle);
                 startActivity(intent);
-
             }
         });
 
