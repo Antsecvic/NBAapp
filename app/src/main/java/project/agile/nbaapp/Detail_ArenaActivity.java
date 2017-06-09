@@ -1,76 +1,67 @@
 package project.agile.nbaapp;
 
-import android.content.Intent;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import project.agile.Object.PlayerInOneSeason;
+
 import project.agile.util.SQLdm;
 
 public class Detail_ArenaActivity extends AppCompatActivity {
-    public List<Map<String,String>> list=new ArrayList<>();
+    public List<Map<String, String>> list = new ArrayList<>();
     String ArenaName;
     String ArenaLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail__arena);
-        ArenaName=getIntent().getStringExtra("ArenaName");
-        ArenaLocation=getIntent().getStringExtra("ArenaLocation");
-        readFromSQ();
-        ListView listView=(ListView) findViewById(R.id.arenaDataList);
-        TextView arena=(TextView)findViewById(R.id.arena) ;
-        arena.setText(ArenaName);
-        SimpleAdapter simpleAdapter=new SimpleAdapter(this,list,R.layout.arena_data_item,
-                new String[]{"time","lg","teamAbbr"},new int[]{R.id.time,R.id.lg,R.id.team});
-        listView.setAdapter(simpleAdapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent = new Intent(Detail_ArenaActivity.this, PlayersOfOneSeason.class);
-//                String teamAbbr = list.get(i).get("teamAbbr");
-//                String season = list.get(i).get("time");
-//
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("TeamAbbr",teamAbbr);
-//                bundle.putSerializable("Season",season);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//            }
-//        });
+
+        ArenaName = getIntent().getStringExtra("ArenaName");
+        ArenaLocation = getIntent().getStringExtra("ArenaLocation");
+        Map<String, String> ArenaMap = readFromSQ();
+        TextView detailArenaName = (TextView) findViewById(R.id.detailArenaName);
+        TextView detailTeam = (TextView) findViewById(R.id.detailTeam);
+        TextView detailTeamLeague = (TextView) findViewById(R.id.detailTeamLeague);
+        TextView detailTeamDate = (TextView) findViewById(R.id.detailDate);
+        TextView detailLocation = (TextView) findViewById(R.id.detailLocation);
+        TextView detailCapacity = (TextView) findViewById(R.id.detailCapacity);
+        detailArenaName.setText(ArenaName);
+        detailLocation.setText(ArenaLocation);
+        detailTeamDate.setText(ArenaMap.get("time"));
+        detailTeam.setText(ArenaMap.get("teamAbbr"));
+        detailTeamLeague.setText(ArenaMap.get("lg"));
+        detailCapacity.setText(ArenaMap.get("capacity"));
+
     }
-    private void readFromSQ(){
+
+    private Map<String, String> readFromSQ() {
         SQLdm s = new SQLdm();
         final SQLiteDatabase db = s.openDatabase(getApplicationContext());
-        Cursor cursor = db.rawQuery("select * from Arena where Arena = ? and ArenaLocation = ?", new String[] {ArenaName, ArenaLocation});
-        if(cursor.moveToFirst()){
-            do {
-                Map<String,String> map=new HashMap<>();
-                String ArenaStart=cursor.getString(cursor.getColumnIndex("ArenaStart"));
-                String ArenaEnd=cursor.getString(cursor.getColumnIndex("ArenaEnd"));
-                String league = cursor.getString(cursor.getColumnIndex("Lg"));
-                String teamAbbr = cursor.getString(cursor.getColumnIndex("TeamAbbr"));
-                map.put("time",ArenaStart+"-"+ArenaEnd);
-                map.put("lg",league);
-                map.put("teamAbbr",teamAbbr);
-                list.add(map);
-
-            }while(cursor.moveToNext());
-            cursor.close();
-        }
+        Cursor cursor = db.rawQuery("select * from Arena where Arena = ? and ArenaLocation = ?", new String[]{ArenaName, ArenaLocation});
+        Map<String, String> map = new HashMap<>();
+        while (cursor.moveToNext()) {
+            String ArenaStart = cursor.getString(cursor.getColumnIndex("ArenaStart"));
+            String ArenaEnd = cursor.getString(cursor.getColumnIndex("ArenaEnd"));
+            String league = cursor.getString(cursor.getColumnIndex("Lg"));
+            String teamAbbr = cursor.getString(cursor.getColumnIndex("TeamAbbr"));
+            String capacity = cursor.getString(cursor.getColumnIndex("ArenaCapacity"));
+            map.put("time", ArenaStart + "-" + ArenaEnd);
+            map.put("lg", league);
+            map.put("teamAbbr", teamAbbr);
+            map.put("capacity", capacity);
+        } while (cursor.moveToNext());
+        cursor.close();
+        return map;
     }
 
 }
