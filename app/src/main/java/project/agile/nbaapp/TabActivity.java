@@ -1,6 +1,8 @@
 package project.agile.nbaapp;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
@@ -92,38 +94,38 @@ public class TabActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                progressDialog = new ProgressDialog(TabActivity.this);
-                progressDialog.setTitle(getResources().getString(R.string.loading_title));
-                progressDialog.setMessage(getResources().getString(R.string.loading_message));
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            SQLdm s = new SQLdm();
-                            final SQLiteDatabase db = s.openDatabase(getApplicationContext());
-                            db.execSQL("DELETE FROM Player;");
-                            db.execSQL("DELETE FROM Arena;");
-                            db.execSQL("DELETE FROM Coach;");
-                            db.execSQL("DELETE FROM Team;");
-                            Log.d(TAG, "Database Finish");
-                            WriteToSD.writeToSD(getApplicationContext(), getResources().getString(R.string.file_name));
-                            Log.d(TAG, "Copy File Finish");
-                            ReadCSV readCSV = new ReadCSV();
-                            readCSV.Insert(db, getResources().getString(R.string.file_name));
-                            Log.d(TAG, "Insert Finish");
-                            Message message = new Message();
-                            message.what = UPDATE_SUCCESS;
-                            mHandler.sendMessage(message);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                            Message message = new Message();
-                            message.what = UPDATE_FAILED;
-                            mHandler.sendMessage(message);
-                        }
-                    }
-                }).start();
+//                progressDialog = new ProgressDialog(TabActivity.this);
+//                progressDialog.setTitle(getResources().getString(R.string.loading_title));
+//                progressDialog.setMessage(getResources().getString(R.string.loading_message));
+//                progressDialog.setCancelable(false);
+//                progressDialog.show();
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            SQLdm s = new SQLdm();
+//                            final SQLiteDatabase db = s.openDatabase(getApplicationContext());
+//                            db.execSQL("DELETE FROM Player;");
+//                            db.execSQL("DELETE FROM Arena;");
+//                            db.execSQL("DELETE FROM Coach;");
+//                            db.execSQL("DELETE FROM Team;");
+//                            Log.d(TAG, "Database Finish");
+//                            WriteToSD.writeToSD(getApplicationContext(), getResources().getString(R.string.file_name));
+//                            Log.d(TAG, "Copy File Finish");
+//                            ReadCSV readCSV = new ReadCSV();
+//                            readCSV.Insert(db, getResources().getString(R.string.file_name));
+//                            Log.d(TAG, "Insert Finish");
+//                            Message message = new Message();
+//                            message.what = UPDATE_SUCCESS;
+//                            mHandler.sendMessage(message);
+//                        }catch (Exception e){
+//                            e.printStackTrace();
+//                            Message message = new Message();
+//                            message.what = UPDATE_FAILED;
+//                            mHandler.sendMessage(message);
+//                        }
+//                    }
+//                }).start();
 //                if(ContextCompat.checkSelfPermission(TabActivity.this, android.Manifest.
 //                        permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
 //                    ActivityCompat.requestPermissions(TabActivity.this,new
@@ -132,7 +134,13 @@ public class TabActivity extends AppCompatActivity {
 //                    writeSd();
 //                }
 
-
+                new AlertDialog.Builder(TabActivity.this)
+                        .setTitle("提示")
+                        .setMessage("你确定要更新数据吗?")
+                        .setPositiveButton("确定",new onPositiveListener())
+                        .setNegativeButton("取消",null)
+                        .create()
+                        .show();
             }
         });
 
@@ -263,7 +271,52 @@ public class TabActivity extends AppCompatActivity {
         client.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
     }
+    class onPositiveListener implements DialogInterface.OnClickListener{
 
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            if(ContextCompat.checkSelfPermission(TabActivity.this, android.Manifest.
+                    permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(TabActivity.this,new
+                        String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+            }else{
+                writeSd();
+            }
+
+//            progressDialog = new ProgressDialog(TabActivity.this);
+//            progressDialog.setTitle(getResources().getString(R.string.loading_title));
+//            progressDialog.setMessage(getResources().getString(R.string.loading_message));
+//            progressDialog.setCancelable(false);
+//            progressDialog.show();
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        SQLdm s = new SQLdm();
+//                        final SQLiteDatabase db = s.openDatabase(getApplicationContext());
+//                        db.execSQL("DELETE FROM Player;");
+//                        db.execSQL("DELETE FROM Arena;");
+//                        db.execSQL("DELETE FROM Coach;");
+//                        db.execSQL("DELETE FROM Team;");
+//                        Log.d(TAG, "Database Finish");
+//                        WriteToSD.writeToSD(getApplicationContext(), getResources().getString(R.string.file_name));
+//                        Log.d(TAG, "Copy File Finish");
+//                        ReadCSV readCSV = new ReadCSV();
+//                        readCSV.Insert(db, getResources().getString(R.string.file_name));
+//                        Log.d(TAG, "Insert Finish");
+//                        Message message = new Message();
+//                        message.what = UPDATE_SUCCESS;
+//                        mHandler.sendMessage(message);
+//                    }catch (Exception e){
+//                        e.printStackTrace();
+//                        Message message = new Message();
+//                        message.what = UPDATE_FAILED;
+//                        mHandler.sendMessage(message);
+//                    }
+//                }
+//            }).start();
+        }
+    }
     @Override
     public void onStop() {
         super.onStop();

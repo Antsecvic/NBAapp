@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
@@ -22,7 +23,7 @@ import project.agile.Adapter.ArenaAdapter;
 import project.agile.Object.Arena;
 import project.agile.util.SQLdm;
 
-/**
+/*
  * Created by Oneplus on 2017/5/25.
  */
 
@@ -35,7 +36,9 @@ public class ArenaFragment  extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("weishenme", "onCreateView: ");
+
+ 
+
         View view = inflater.inflate(R.layout.fragment_common,container,false);
         final ListView arenaListView = (ListView) view.findViewById(R.id.fragment_list);
         SearchView search = (SearchView) view.findViewById(R.id.search);
