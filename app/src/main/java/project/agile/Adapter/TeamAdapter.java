@@ -2,7 +2,6 @@ package project.agile.Adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,15 +20,13 @@ import project.agile.nbaapp.R;
  */
 public class TeamAdapter extends ArrayAdapter<Team>{
     private int resourceId;
-    private List<Team> mData;
     private List<Team> mBackData;
 
     public TeamAdapter(Context context, int textViewResourceId,
                          List<Team> objects){
         super(context,textViewResourceId,objects);
         resourceId = textViewResourceId;
-        this.mData = objects;
-        this.mBackData = objects;
+        this.mBackData = new ArrayList<Team>(objects);
     }
 
     @Override
@@ -55,7 +52,6 @@ public class TeamAdapter extends ArrayAdapter<Team>{
 
     @Override
     public Filter getFilter() {
-        Log.d("sibing", "getFilter: ");
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
@@ -74,7 +70,6 @@ public class TeamAdapter extends ArrayAdapter<Team>{
                 }else if (TextUtils.isEmpty(constraint)){
                     result.values = mBackData;
                     result.count = mBackData.size();
-//                    founded = mBackData;
                 }
 
 

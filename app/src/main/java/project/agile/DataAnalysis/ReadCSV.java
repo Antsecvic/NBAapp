@@ -123,8 +123,8 @@ public class ReadCSV {
 			List<String> lb = coach.get(la);
 			values.put(TEAMCOACH,la.get(0));
 			values.put(TEAMSEASON,la.get(1));
-			values.put(TEAMABBR,lb.get(0));
-			values.put(LEAGUE,lb.get(1));
+			values.put(TEAMABBR,lb.get(1));
+			values.put(LEAGUE,lb.get(0));
             db.beginTransaction();
             try {
                 db.insert("Coach", null, values);
@@ -254,13 +254,12 @@ public class ReadCSV {
 			while ((nextLine = reader.readNext()) != null) {
 				String[] seasonStr = nextLine[2].split("-");
 				double season = Double.parseDouble(seasonStr[1]);
-
 				String[] str = nextLine[11].split("  ");
 				for (String s : str) {
 					if (s.length() != 0) {
 						List<String> la = new ArrayList<String>();
 						la.add(s.trim());
-						la.add(season + "");
+						la.add((int)season + "");
 						
 						List<String> lb = new ArrayList<String>();
 						lb.add(nextLine[5]);
@@ -294,8 +293,8 @@ public class ReadCSV {
 
 				List<String> la = new ArrayList<String>();
 				la.add(nextLine[21]);
-				la.add(start + "");
-				la.add(end + "");
+				la.add((int)start + "");
+				la.add((int)end + "");
 				if (nextLine[21].length() != 0) {
 					if (arena.get(la) == null) {
 						List<String> lb = new ArrayList<String>();
