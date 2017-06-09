@@ -63,6 +63,12 @@ public class PlayersOfOneSeason extends AppCompatActivity {
         teamTextView = (TextView)findViewById(R.id.teamNameOfOneYear);
         seasonTextView = (TextView)findViewById(R.id.seasonOfOneYear);
         teamTextView.setText(teamName);
+        teamTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         seasonTextView.setText((Integer.parseInt(season)-1)
                 +"-"+season);
         mListView = (ListView)findViewById(R.id.teamOneSeasonList);

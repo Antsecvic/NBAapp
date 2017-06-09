@@ -1,9 +1,12 @@
 package project.agile.nbaapp;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -32,8 +35,22 @@ public class Detail_ArenaActivity extends AppCompatActivity {
         TextView arena=(TextView)findViewById(R.id.arena) ;
         arena.setText(ArenaName);
         SimpleAdapter simpleAdapter=new SimpleAdapter(this,list,R.layout.arena_data_item,
-                new String[]{"time","lg","team"},new int[]{R.id.time,R.id.lg,R.id.team});
+                new String[]{"time","lg","teamAbbr"},new int[]{R.id.time,R.id.lg,R.id.team});
         listView.setAdapter(simpleAdapter);
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Intent intent = new Intent(Detail_ArenaActivity.this, PlayersOfOneSeason.class);
+//                String teamAbbr = list.get(i).get("teamAbbr");
+//                String season = list.get(i).get("time");
+//
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable("TeamAbbr",teamAbbr);
+//                bundle.putSerializable("Season",season);
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//            }
+//        });
     }
     private void readFromSQ(){
         SQLdm s = new SQLdm();
@@ -48,7 +65,7 @@ public class Detail_ArenaActivity extends AppCompatActivity {
                 String teamAbbr = cursor.getString(cursor.getColumnIndex("TeamAbbr"));
                 map.put("time",ArenaStart+"-"+ArenaEnd);
                 map.put("lg",league);
-                map.put("team",teamAbbr);
+                map.put("teamAbbr",teamAbbr);
                 list.add(map);
 
             }while(cursor.moveToNext());
