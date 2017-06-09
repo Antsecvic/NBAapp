@@ -29,18 +29,18 @@ import project.agile.util.MapUtil;
 import project.agile.util.SQLdm;
 
 /**
- * Created by Guure on 2017/6/7.
+ * Created by Guure on 2017/6/9.
  */
 
-public class TeamHighestWinningRateRequest implements IStatRequest {
+public class TeamMostChampionsRequest implements IStatRequest {
 
-    private String name = "常规赛最高胜率排行榜";
+    private String name = "队史冠军排行榜";
 
-    private int position = 1;
+    private int position = 3;
 
     private ProgressDialog progressDialog;
 
-    private Map<Team, Double> teamWinningRate;
+    private Map<Team, Integer> teamChampions;
 
     private LinearLayout content;
 
@@ -64,19 +64,19 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
         str = new String[20];
 
         float x = 0f;
-        for (Map.Entry<Team, Double> entry : teamWinningRate.entrySet()) {
+        for (Map.Entry<Team, Integer> entry : teamChampions.entrySet()) {
             if (x == 20f)    break;
             str[(int) x] = entry.getKey().getAbbr();
             entries.add(new BarEntry(x++, entry.getValue().floatValue()));
         }
 
-        BarDataSet set = new BarDataSet(entries, "常规赛历史胜率");
+        BarDataSet set = new BarDataSet(entries, "球队冠军数量");
         set.setValueTextColor(Color.BLUE);
         set.setColor(Color.WHITE);
 
         BarData data = new BarData(set);
         Description d = new Description();
-        d.setText("常规赛最高胜率排行榜");
+        d.setText("队史冠军排行榜");
         barChart.setDescription(d);
         barChart.setData(data);
         barChart.setFitBars(true);
@@ -111,18 +111,22 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
         new requestDataTask().execute(context);
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public int getPosition() {
         return position;
     }
 
+    @Override
     public void setPosition(int position) {
         this.position = position;
     }
@@ -142,7 +146,7 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
 
         @Override
         protected Boolean doInBackground(Context... params) {
-            teamWinningRate = new LinkedHashMap<>();
+            teamChampions = new LinkedHashMap<>();
 
             SQLdm s = new SQLdm();
             final SQLiteDatabase db = s.openDatabase(params[0]);
@@ -155,15 +159,10 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
                     String abbr = cursor.getString(cursor.getColumnIndex("TeamAbbr"));
                     Team team = new Team(lg, abbr);
 
-                    if (teamWinningRate.get(team) == null) {
-                        double g = (double) cursor.getInt(cursor.getColumnIndex("TeamG"));
-                        double w = (double) cursor.getInt(cursor.getColumnIndex("TeamW"));
-                        Log.d("Guu", abbr + " " + g + " " + w);
-                        double winningRate;
-                        if (g != 0.0) winningRate = w / g;
-                        else        winningRate = 0.0;
-                        Log.d("Guu", abbr + " " + winningRate);
-                        teamWinningRate.put(team, winningRate);
+                    if (teamChampions.get(team) == null) {
+                        int champs = cursor.getInt(cursor.getColumnIndex("TeamChamp"));
+                        Log.d("Guu", abbr + " " + champs);
+                        teamChampions.put(team, champs);
                     }
 
                 } while (cursor.moveToNext());
@@ -171,19 +170,19 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
                 cursor.close();
             }
 
-            teamWinningRate = MapUtil.sortByValue(teamWinningRate);
+            teamChampions = MapUtil.sortByValue(teamChampions);
 
-            Map<Team, Double> temp = new LinkedHashMap<>();
+            Map<Team, Integer> temp = new LinkedHashMap<>();
 
             int counter = 20;
-            for (Map.Entry<Team, Double> entry : teamWinningRate.entrySet()) {
+            for (Map.Entry<Team, Integer> entry : teamChampions.entrySet()) {
                 if (counter == 0)   break;
                 temp.put(entry.getKey(), entry.getValue());
                 counter--;
             }
-            teamWinningRate = temp;
+            teamChampions = temp;
 
-            for (Map.Entry<Team, Double> entry : teamWinningRate.entrySet()) {
+            for (Map.Entry<Team, Integer> entry : teamChampions.entrySet()) {
                 Log.d("Guu", entry.getKey().getAbbr() + " : " + entry.getValue());
             }
 

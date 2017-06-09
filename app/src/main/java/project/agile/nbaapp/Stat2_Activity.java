@@ -21,6 +21,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import project.agile.StatModel.IStatRequest;
+import project.agile.StatModel.StatsArena;
+import project.agile.StatModel.StatsCoach;
 import project.agile.StatModel.StatsPlayer;
 import project.agile.StatModel.StatsTeam;
 
@@ -69,15 +71,21 @@ public class Stat2_Activity extends AppCompatActivity
                 break;
             case 1:
                 titleItem.setTitle("教练百科");
-                StatsTeam statsTeam = StatsTeam.getInstance();
-                statRequests = statsTeam.getTeamRequests();
+                StatsCoach statsCoach = StatsCoach.getInstance();
+                statRequests = statsCoach.getCoachRequests();
                 addItem(menu2);
                 break;
             case 2:
                 titleItem.setTitle("球队百科");
+                StatsTeam statsTeam = StatsTeam.getInstance();
+                statRequests = statsTeam.getTeamRequests();
+                addItem(menu2);
                 break;
             case 3:
                 titleItem.setTitle("场馆百科");
+                StatsArena statsArena = StatsArena.getInstance();
+                statRequests = statsArena.getArenaRequests();
+                addItem(menu2);
                 break;
             default:
                 break;

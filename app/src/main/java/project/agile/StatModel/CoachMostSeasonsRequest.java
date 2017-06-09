@@ -24,23 +24,22 @@ import java.util.List;
 import java.util.Map;
 
 import project.agile.Object.Player;
-import project.agile.Object.Team;
 import project.agile.util.MapUtil;
 import project.agile.util.SQLdm;
 
 /**
- * Created by Guure on 2017/6/7.
+ * Created by Guure on 2017/6/9.
  */
 
-public class TeamHighestWinningRateRequest implements IStatRequest {
+public class CoachMostSeasonsRequest implements IStatRequest {
 
-    private String name = "常规赛最高胜率排行榜";
+    private String name = "常规赛执教生涯排行榜";
 
     private int position = 1;
 
     private ProgressDialog progressDialog;
 
-    private Map<Team, Double> teamWinningRate;
+    private Map<String, Integer> coachGames;
 
     private LinearLayout content;
 
@@ -64,19 +63,19 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
         str = new String[20];
 
         float x = 0f;
-        for (Map.Entry<Team, Double> entry : teamWinningRate.entrySet()) {
+        for (Map.Entry<String, Integer> entry : coachGames.entrySet()) {
             if (x == 20f)    break;
-            str[(int) x] = entry.getKey().getAbbr();
-            entries.add(new BarEntry(x++, entry.getValue().floatValue()));
+            str[(int) x] = entry.getKey();
+            entries.add(new BarEntry(x++, entry.getValue().intValue()));
         }
 
-        BarDataSet set = new BarDataSet(entries, "常规赛历史胜率");
+        BarDataSet set = new BarDataSet(entries, "常规赛执教赛季数量");
         set.setValueTextColor(Color.BLUE);
         set.setColor(Color.WHITE);
 
         BarData data = new BarData(set);
         Description d = new Description();
-        d.setText("常规赛最高胜率排行榜");
+        d.setText("常规赛执教生涯排行榜");
         barChart.setDescription(d);
         barChart.setData(data);
         barChart.setFitBars(true);
@@ -94,7 +93,7 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
         xAxis.setValueFormatter(formatter);
         xAxis.setTextColor(Color.BLUE);
 
-        barChart.setScaleMinima(3f, 0f);
+        barChart.setScaleMinima(4f, 0f);
         barChart.setBackgroundColor(Color.CYAN);
         barChart.invalidate();
 
@@ -111,18 +110,22 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
         new requestDataTask().execute(context);
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public int getPosition() {
         return position;
     }
 
+    @Override
     public void setPosition(int position) {
         this.position = position;
     }
@@ -142,28 +145,24 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
 
         @Override
         protected Boolean doInBackground(Context... params) {
-            teamWinningRate = new LinkedHashMap<>();
+            coachGames = new LinkedHashMap<>();
 
             SQLdm s = new SQLdm();
             final SQLiteDatabase db = s.openDatabase(params[0]);
 
-            Cursor cursor = db.rawQuery("select * from Team", new String[]{});
+            Cursor cursor = db.rawQuery("select * from Coach", new String[]{});
 
             if (cursor.moveToFirst()) {
                 do {
-                    String lg = cursor.getString(cursor.getColumnIndex("Lg"));
-                    String abbr = cursor.getString(cursor.getColumnIndex("TeamAbbr"));
-                    Team team = new Team(lg, abbr);
+                    String name = cursor.getString(cursor.getColumnIndex("TeamCoach"));
 
-                    if (teamWinningRate.get(team) == null) {
-                        double g = (double) cursor.getInt(cursor.getColumnIndex("TeamG"));
-                        double w = (double) cursor.getInt(cursor.getColumnIndex("TeamW"));
-                        Log.d("Guu", abbr + " " + g + " " + w);
-                        double winningRate;
-                        if (g != 0.0) winningRate = w / g;
-                        else        winningRate = 0.0;
-                        Log.d("Guu", abbr + " " + winningRate);
-                        teamWinningRate.put(team, winningRate);
+                    if (coachGames.get(name) == null) {
+//                        Log.d("Guu", name + " " + birth + " " + season + " " + points);
+                        coachGames.put(name, 1);
+                    } else {
+                        int totalSeasons = coachGames.get(name);
+                        totalSeasons++;
+                        coachGames.put(name, totalSeasons);
                     }
 
                 } while (cursor.moveToNext());
@@ -171,20 +170,20 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
                 cursor.close();
             }
 
-            teamWinningRate = MapUtil.sortByValue(teamWinningRate);
+            coachGames = MapUtil.sortByValue(coachGames);
 
-            Map<Team, Double> temp = new LinkedHashMap<>();
+            Map<String, Integer> temp = new LinkedHashMap<>();
 
             int counter = 20;
-            for (Map.Entry<Team, Double> entry : teamWinningRate.entrySet()) {
+            for (Map.Entry<String, Integer> entry : coachGames.entrySet()) {
                 if (counter == 0)   break;
                 temp.put(entry.getKey(), entry.getValue());
                 counter--;
             }
-            teamWinningRate = temp;
+            coachGames = temp;
 
-            for (Map.Entry<Team, Double> entry : teamWinningRate.entrySet()) {
-                Log.d("Guu", entry.getKey().getAbbr() + " : " + entry.getValue());
+            for (Map.Entry<String, Integer> entry : coachGames.entrySet()) {
+                Log.d("Guu", entry.getKey() + " : " + entry.getValue());
             }
 
             return true;
