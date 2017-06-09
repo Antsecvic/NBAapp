@@ -9,10 +9,10 @@ public class PlayerInOneSeason {
     private String league;
     private String teamAbbr;
     private int games;
-    private double points;
+    private int points;
     private double ppg;
 
-    public PlayerInOneSeason(String season, String league, String teamAbbr, int games, double points, double ppg) {
+    public PlayerInOneSeason(String season, String league, String teamAbbr, int games, int points, double ppg) {
         this.season = season;
         this.league = league;
         this.teamAbbr = teamAbbr;
@@ -54,11 +54,11 @@ public class PlayerInOneSeason {
         this.games = games;
     }
 
-    public double getPoints() {
+    public int getPoints() {
         return points;
     }
 
-    public void setPoints(double points) {
+    public void setPoints(int points) {
         this.points = points;
     }
 

@@ -16,4 +16,5 @@
     <string name="games">总场数</string>
     <string name="wins">胜场数</string>
     <string name="loses">负场数</string>
+    <string name="player_name">球员</string>
 </resources>
