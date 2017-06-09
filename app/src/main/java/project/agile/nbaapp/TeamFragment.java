@@ -92,7 +92,7 @@ public class TeamFragment  extends Fragment {
                     teamAdapter.getFilter().filter(newText.toString());
 
                 }else{
-//                    arenaAdapter.getFilter().filter("");
+                    teamAdapter.getFilter().filter("");
                     teamListView.clearTextFilter();
 
                 }

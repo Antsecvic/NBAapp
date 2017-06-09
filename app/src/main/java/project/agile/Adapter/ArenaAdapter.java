@@ -1,8 +1,6 @@
 package project.agile.Adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,15 +19,13 @@ import project.agile.nbaapp.R;
  */
 public class ArenaAdapter extends ArrayAdapter<Arena>{
     private int resourceId;
-    private List<Arena> mData;
     private List<Arena> mBackData;
 
     public ArenaAdapter(Context context, int textViewResourceId,
                          List<Arena> objects){
         super(context,textViewResourceId,objects);
         resourceId = textViewResourceId;
-        this.mData = objects;
-        this.mBackData = objects;
+        this.mBackData = new ArrayList<Arena>(objects);
     }
 
     @Override
@@ -55,7 +51,6 @@ public class ArenaAdapter extends ArrayAdapter<Arena>{
 
     @Override
     public Filter getFilter() {
-        Log.d("sibing", "getFilter: ");
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
@@ -71,10 +66,9 @@ public class ArenaAdapter extends ArrayAdapter<Arena>{
                     result.values = founded;
                     result.count = founded.size();
 
-                }else if (TextUtils.isEmpty(constraint)){
+                }else{
                     result.values = mBackData;
                     result.count = mBackData.size();
-//                    founded = mBackData;
                 }
 
 
@@ -84,10 +78,10 @@ public class ArenaAdapter extends ArrayAdapter<Arena>{
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 clear();
-//                mData = (List<Arena>) results.values;
                 for (Arena item : (List<Arena>) results.values) {
                     add(item);
                 }
+
                 if (results.count > 0){
                     notifyDataSetChanged();
                 }else {
