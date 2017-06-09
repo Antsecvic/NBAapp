@@ -2,6 +2,7 @@ package project.agile.nbaapp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +12,9 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -28,11 +31,14 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.Manifest;
 
 import project.agile.DataAnalysis.ReadCSV;
 import project.agile.util.SQLdm;
 import project.agile.util.ToastUtil;
 import project.agile.util.WriteToSD;
+
+import static android.R.attr.permission;
 
 public class TabActivity extends AppCompatActivity {
 
@@ -118,8 +124,18 @@ public class TabActivity extends AppCompatActivity {
                         }
                     }
                 }).start();
+//                if(ContextCompat.checkSelfPermission(TabActivity.this, android.Manifest.
+//                        permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+//                    ActivityCompat.requestPermissions(TabActivity.this,new
+//                    String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+//                }else{
+//                    writeSd();
+//                }
+
+
             }
         });
+
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -256,5 +272,55 @@ public class TabActivity extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
+    }
+
+    private void writeSd(){
+        progressDialog = new ProgressDialog(TabActivity.this);
+        progressDialog.setTitle(getResources().getString(R.string.loading_title));
+        progressDialog.setMessage(getResources().getString(R.string.loading_message));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    SQLdm s = new SQLdm();
+                    final SQLiteDatabase db = s.openDatabase(getApplicationContext());
+                    db.execSQL("DELETE FROM Player;");
+                    db.execSQL("DELETE FROM Arena;");
+                    db.execSQL("DELETE FROM Coach;");
+                    db.execSQL("DELETE FROM Team;");
+                    Log.d(TAG, "Database Finish");
+                    WriteToSD.writeToSD(getApplicationContext(), getResources().getString(R.string.file_name));
+                    Log.d(TAG, "Copy File Finish");
+                    ReadCSV readCSV = new ReadCSV();
+                    readCSV.Insert(db, getResources().getString(R.string.file_name));
+                    Log.d(TAG, "Insert Finish");
+                    Message message = new Message();
+                    message.what = UPDATE_SUCCESS;
+                    mHandler.sendMessage(message);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Message message = new Message();
+                    message.what = UPDATE_FAILED;
+                    mHandler.sendMessage(message);
+                }
+            }
+        }).start();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String[] permissions,
+                                           int[] grantResults){
+        switch(requestCode){
+            case 1:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    writeSd();
+                }else{
+
+                }
+                break;
+            default:
+        }
     }
 }
