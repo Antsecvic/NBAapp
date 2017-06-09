@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +34,8 @@ public class CoachFragment  extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_common,container,false);
-        ListView coachListView = (ListView) view.findViewById(R.id.fragment_list);
+        final ListView coachListView = (ListView) view.findViewById(R.id.fragment_list);
+        SearchView search = (SearchView) view.findViewById(R.id.search);
 
         coachList.clear();
         //初始化coachList
@@ -49,7 +52,7 @@ public class CoachFragment  extends Fragment {
         }
 
 
-        CoachAdapter coachAdapter = new CoachAdapter(getActivity(),R.layout.coach_item,
+        final CoachAdapter coachAdapter = new CoachAdapter(getActivity(),R.layout.coach_item,
                 coachList);
 
         coachListView.setAdapter(coachAdapter);
@@ -68,6 +71,29 @@ public class CoachFragment  extends Fragment {
             }
         });
 
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("diujiong", "submit");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d("diujiong", newText);
+                coachAdapter.notifyDataSetChanged();
+                if (!TextUtils.isEmpty(newText)){
+                    coachAdapter.getFilter().filter(newText.toString());
+
+                }else{
+//                    arenaAdapter.getFilter().filter("");
+                    coachListView.clearTextFilter();
+
+                }
+                return true;
+            }
+        });
         return view;
     }
 

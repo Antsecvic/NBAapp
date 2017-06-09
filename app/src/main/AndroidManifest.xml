@@ -24,13 +24,16 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".TabActivity"/>
-        <activity android:name=".Detail_PlayerActivity"/>
-        <activity android:name=".Detail_TeamActivity"/>
-        <activity android:name=".Detail_ArenaActivity"/>
-        <activity android:name=".Detail_CoachActivity"/>
-        <activity android:name=".PlayersOfOneSeason">
-        </activity>
+        <activity android:name=".TabActivity" />
+        <activity android:name=".Detail_PlayerActivity" />
+        <activity android:name=".Detail_TeamActivity" />
+        <activity android:name=".Detail_ArenaActivity" />
+        <activity android:name=".Detail_CoachActivity" />
+		<activity android:name=".PlayersOfOneSeason"/>
+        <activity
+            android:name=".Stat2_Activity"
+            android:label="数据图表"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
