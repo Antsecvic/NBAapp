@@ -18,6 +18,15 @@ public class Team implements Serializable{
     private int wins;
     private int loses;
 
+    public Team() {
+        super();
+    }
+
+    public Team(String league, String abbr) {
+        this.league = league;
+        this.abbr = abbr;
+    }
+
     public String getLeague() {
         return league;
     }
@@ -76,4 +85,21 @@ public class Team implements Serializable{
     public void setLoses(int loses) {
         this.loses = loses;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Team team = (Team) o;
+
+        return abbr.equals(team.abbr);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return abbr.hashCode();
+    }
+
 }

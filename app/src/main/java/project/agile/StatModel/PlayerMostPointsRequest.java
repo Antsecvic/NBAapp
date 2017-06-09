@@ -35,7 +35,7 @@ import project.agile.util.SQLdm;
 
 public class PlayerMostPointsRequest implements IStatRequest {
 
-    private String name = "历史总得分榜";
+    private String name = "常规赛历史总得分榜";
 
     private int position = 1;
 
@@ -71,13 +71,13 @@ public class PlayerMostPointsRequest implements IStatRequest {
             entries.add(new BarEntry(x++, entry.getValue().floatValue()));
         }
 
-        BarDataSet set = new BarDataSet(entries, "生涯总得分");
-        set.setValueTextColor(Color.WHITE);
-        set.setColor(Color.LTGRAY);
+        BarDataSet set = new BarDataSet(entries, "常规赛生涯总得分");
+        set.setValueTextColor(Color.BLUE);
+        set.setColor(Color.WHITE);
 
         BarData data = new BarData(set);
         Description d = new Description();
-        d.setText("历史总得分榜");
+        d.setText("常规赛历史总得分榜");
         barChart.setDescription(d);
         barChart.setData(data);
         barChart.setFitBars(true);
@@ -93,9 +93,10 @@ public class PlayerMostPointsRequest implements IStatRequest {
         xAxis.setGranularity(1f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(formatter);
-        xAxis.setTextColor(Color.WHITE);
+        xAxis.setTextColor(Color.BLUE);
 
         barChart.setScaleMinima(6f, 0f);
+        barChart.setBackgroundColor(Color.CYAN);
         barChart.invalidate();
 
         BarChart.LayoutParams p = new BarChart.LayoutParams(BarChart.LayoutParams.MATCH_PARENT, BarChart.LayoutParams.MATCH_PARENT);

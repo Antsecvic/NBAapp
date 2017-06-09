@@ -21,6 +21,7 @@ public class StatsPlayer {
         playerRequests = new ArrayList<>();
         playerRequests.add(new PlayerMostPointsRequest());
         playerRequests.add(new PlayerMostPPGRequest());
+        playerRequests.add(new PlayerMostGamesRequest());
     }
 
     public List<IStatRequest> getPlayerRequests() {

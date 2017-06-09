@@ -287,7 +287,7 @@ public class ReadCSV {
 			nextLine = reader.readNext();
 			nextLine = reader.readNext();
 			while ((nextLine = reader.readNext()) != null) {
-				String[] startEndStr = nextLine[22].split("-");
+				String[] startEndStr = nextLine[20].split("-");
 				double start = Double.parseDouble(startEndStr[0]);
 				double end = Double.parseDouble(startEndStr[1]);
 
