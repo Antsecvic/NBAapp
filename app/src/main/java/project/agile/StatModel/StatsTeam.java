@@ -20,6 +20,8 @@ public class StatsTeam {
     private StatsTeam() {
         teamRequests = new ArrayList<>();
         teamRequests.add(new TeamHighestWinningRateRequest());
+        teamRequests.add(new TeamLongestHistoryRequest());
+        teamRequests.add(new TeamMostChampionsRequest());
     }
 
     public List<IStatRequest> getTeamRequests() {

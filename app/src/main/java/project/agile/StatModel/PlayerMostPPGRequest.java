@@ -33,7 +33,7 @@ import project.agile.util.SQLdm;
 
 public class PlayerMostPPGRequest implements IStatRequest {
 
-    private String name = "历史场均得分榜";
+    private String name = "常规赛历史场均得分榜";
 
     private int position = 2;
 
@@ -69,13 +69,13 @@ public class PlayerMostPPGRequest implements IStatRequest {
             entries.add(new BarEntry(x++, entry.getValue().floatValue()));
         }
 
-        BarDataSet set = new BarDataSet(entries, "生涯场均得分");
-        set.setValueTextColor(Color.WHITE);
-        set.setColor(Color.LTGRAY);
+        BarDataSet set = new BarDataSet(entries, "常规赛生涯场均得分");
+        set.setValueTextColor(Color.BLUE);
+        set.setColor(Color.WHITE);
 
         BarData data = new BarData(set);
         Description d = new Description();
-        d.setText("历史场均得分榜");
+        d.setText("常规赛历史场均得分榜");
         barChart.setDescription(d);
         barChart.setData(data);
         barChart.setFitBars(true);
@@ -91,9 +91,10 @@ public class PlayerMostPPGRequest implements IStatRequest {
         xAxis.setGranularity(1f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(formatter);
-        xAxis.setTextColor(Color.WHITE);
+        xAxis.setTextColor(Color.BLUE);
 
         barChart.setScaleMinima(6f, 0f);
+        barChart.setBackgroundColor(Color.CYAN);
         barChart.invalidate();
 
         BarChart.LayoutParams p = new BarChart.LayoutParams(BarChart.LayoutParams.MATCH_PARENT, BarChart.LayoutParams.MATCH_PARENT);
@@ -106,7 +107,7 @@ public class PlayerMostPPGRequest implements IStatRequest {
         progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Loading");
         progressDialog.setCancelable(false);
-        new PlayerMostPPGRequest.requestDataTask().execute(context);
+        new requestDataTask().execute(context);
     }
 
     public String getName() {

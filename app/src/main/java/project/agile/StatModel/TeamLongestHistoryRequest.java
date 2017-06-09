@@ -29,18 +29,18 @@ import project.agile.util.MapUtil;
 import project.agile.util.SQLdm;
 
 /**
- * Created by Guure on 2017/6/7.
+ * Created by Guure on 2017/6/9.
  */
 
-public class TeamHighestWinningRateRequest implements IStatRequest {
+public class TeamLongestHistoryRequest implements IStatRequest {
 
-    private String name = "常规赛最高胜率排行榜";
+    private String name = "队史排行榜";
 
-    private int position = 1;
+    private int position = 2;
 
     private ProgressDialog progressDialog;
 
-    private Map<Team, Double> teamWinningRate;
+    private Map<Team, Integer> teamHistory;
 
     private LinearLayout content;
 
@@ -53,6 +53,7 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
         this.content = content;
         this.context = context;
         requestData();
+
     }
 
     @Override
@@ -64,19 +65,19 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
         str = new String[20];
 
         float x = 0f;
-        for (Map.Entry<Team, Double> entry : teamWinningRate.entrySet()) {
+        for (Map.Entry<Team, Integer> entry : teamHistory.entrySet()) {
             if (x == 20f)    break;
             str[(int) x] = entry.getKey().getAbbr();
             entries.add(new BarEntry(x++, entry.getValue().floatValue()));
         }
 
-        BarDataSet set = new BarDataSet(entries, "常规赛历史胜率");
+        BarDataSet set = new BarDataSet(entries, "球队参与赛季数量");
         set.setValueTextColor(Color.BLUE);
         set.setColor(Color.WHITE);
 
         BarData data = new BarData(set);
         Description d = new Description();
-        d.setText("常规赛最高胜率排行榜");
+        d.setText("队史排行榜");
         barChart.setDescription(d);
         barChart.setData(data);
         barChart.setFitBars(true);
@@ -111,18 +112,22 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
         new requestDataTask().execute(context);
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public int getPosition() {
         return position;
     }
 
+    @Override
     public void setPosition(int position) {
         this.position = position;
     }
@@ -142,7 +147,7 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
 
         @Override
         protected Boolean doInBackground(Context... params) {
-            teamWinningRate = new LinkedHashMap<>();
+            teamHistory = new LinkedHashMap<>();
 
             SQLdm s = new SQLdm();
             final SQLiteDatabase db = s.openDatabase(params[0]);
@@ -155,15 +160,14 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
                     String abbr = cursor.getString(cursor.getColumnIndex("TeamAbbr"));
                     Team team = new Team(lg, abbr);
 
-                    if (teamWinningRate.get(team) == null) {
-                        double g = (double) cursor.getInt(cursor.getColumnIndex("TeamG"));
-                        double w = (double) cursor.getInt(cursor.getColumnIndex("TeamW"));
-                        Log.d("Guu", abbr + " " + g + " " + w);
-                        double winningRate;
-                        if (g != 0.0) winningRate = w / g;
-                        else        winningRate = 0.0;
-                        Log.d("Guu", abbr + " " + winningRate);
-                        teamWinningRate.put(team, winningRate);
+                    if (teamHistory.get(team) == null) {
+                        int from = cursor.getInt(cursor.getColumnIndex("TeamFrom"));
+                        int to = cursor.getInt(cursor.getColumnIndex("TeamTo"));
+                        int history;
+                        if (from != 0.0)    history = to - from;
+                        else                history = 0;
+                        Log.d("Guu", abbr + " " + history);
+                        teamHistory.put(team, history);
                     }
 
                 } while (cursor.moveToNext());
@@ -171,19 +175,19 @@ public class TeamHighestWinningRateRequest implements IStatRequest {
                 cursor.close();
             }
 
-            teamWinningRate = MapUtil.sortByValue(teamWinningRate);
+            teamHistory = MapUtil.sortByValue(teamHistory);
 
-            Map<Team, Double> temp = new LinkedHashMap<>();
+            Map<Team, Integer> temp = new LinkedHashMap<>();
 
             int counter = 20;
-            for (Map.Entry<Team, Double> entry : teamWinningRate.entrySet()) {
+            for (Map.Entry<Team, Integer> entry : teamHistory.entrySet()) {
                 if (counter == 0)   break;
                 temp.put(entry.getKey(), entry.getValue());
                 counter--;
             }
-            teamWinningRate = temp;
+            teamHistory = temp;
 
-            for (Map.Entry<Team, Double> entry : teamWinningRate.entrySet()) {
+            for (Map.Entry<Team, Integer> entry : teamHistory.entrySet()) {
                 Log.d("Guu", entry.getKey().getAbbr() + " : " + entry.getValue());
             }
 
