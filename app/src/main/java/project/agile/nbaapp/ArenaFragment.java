@@ -34,6 +34,7 @@ public class ArenaFragment  extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d("jishuo", "shishabi: ");
         View view = inflater.inflate(R.layout.fragment_common,container,false);
         final ListView arenaListView = (ListView) view.findViewById(R.id.fragment_list);
         SearchView search = (SearchView) view.findViewById(R.id.search);
