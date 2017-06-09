@@ -80,13 +80,12 @@ public class PlayerFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Log.d("diujiong", newText);
                 playerAdapter.notifyDataSetChanged();
                 if (!TextUtils.isEmpty(newText)){
                     playerAdapter.getFilter().filter(newText.toString());
 
                 }else{
-//                    arenaAdapter.getFilter().filter("");
+                    playerAdapter.getFilter().filter("");
                     playerListView.clearTextFilter();
 
                 }
