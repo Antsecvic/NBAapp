@@ -5,28 +5,37 @@ package project.agile.Object;
  */
 
 public class CoachInOneSeason {
-    private double season;
-    private Team  mTeam;
-    private Coach  mCoach;
+    private String season;
+    private String league;
+    private String teamAbbr;
 
-    public double getSeason() {
+    public CoachInOneSeason(String season, String league, String teamAbbr) {
+        this.season = season;
+        this.league = league;
+        this.teamAbbr = teamAbbr;
+    }
+
+    public String getSeason() {
         return season;
     }
-    public void setSeason(double season) {
+
+    public void setSeason(String season) {
         this.season = season;
     }
 
-    public Team getTeam() {
-        return mTeam;
-    }
-    public void setTeam(Team team) {
-        mTeam = team;
+    public String getLeague() {
+        return league;
     }
 
-    public Coach getCoach() {
-        return mCoach;
+    public void setLeague(String league) {
+        this.league = league;
     }
-    public void setCoach(Coach coach) {
-        mCoach = coach;
+
+    public String getTeamAbbr() {
+        return teamAbbr;
+    }
+
+    public void setTeamAbbr(String teamAbbr) {
+        this.teamAbbr = teamAbbr;
     }
 }

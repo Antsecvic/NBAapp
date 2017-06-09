@@ -1,6 +1,7 @@
 package project.agile.nbaapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,6 +46,8 @@ public class TabActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private AppBarLayout appBarLayout;
 
+    private int tagNum = 0;
+
     private Handler mHandler;
     private static final int SELECT_PLAYER = 0;
     private static final int SELECT_COACH = 1;
@@ -59,10 +62,14 @@ public class TabActivity extends AppCompatActivity {
      */
     private GoogleApiClient client;
 
+    private ImageView stat;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
+
+        stat = (ImageView) findViewById(R.id.stat);
 
         banner = (ImageView)findViewById(R.id.banner_image_view);
 
@@ -177,6 +184,7 @@ public class TabActivity extends AppCompatActivity {
             //标签选中之后执行的方法
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                tagNum = tab.getPosition();
                 for (int i = 0; i < 4; i++) {
                     if (tab.getPosition() == i) {
                         Message message = new Message();
@@ -201,6 +209,17 @@ public class TabActivity extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+        stat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TabActivity.this, Stat2_Activity.class);
+                // user go to stat from this tag
+                intent.putExtra("tag", tagNum);
+                startActivity(intent);
+            }
+        });
+
     }
 
     /**

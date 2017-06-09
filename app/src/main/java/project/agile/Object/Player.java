@@ -29,4 +29,24 @@ public class Player implements Serializable {
     public void setBirthYear(int birthYear) {
         this.birthYear = birthYear;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        if (birthYear != player.birthYear) return false;
+        return name.equals(player.name);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + birthYear;
+        return result;
+    }
+
 }
