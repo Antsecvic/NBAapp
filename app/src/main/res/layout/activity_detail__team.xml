@@ -27,15 +27,16 @@
     </LinearLayout>
 
     <LinearLayout
-        android:paddingTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="20dp">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView2"
@@ -49,114 +50,115 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
                 android:text="所在联盟"
-                android:layout_weight="1"
-                android:textSize="30sp"
-                android:layout_gravity="center"/>
+                android:textSize="30sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
                 android:text="冠军数"
-                android:layout_weight="1"
-                android:textSize="30sp"
-                android:layout_gravity="center"/>
+                android:textSize="30sp"/>
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
                 android:text="总场数"
-                android:layout_weight="1"
-                android:textSize="30sp"
-                android:layout_gravity="center"/>
+                android:textSize="30sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
                 android:text="胜场数"
-                android:layout_weight="1"
-                android:textSize="30sp"
-                android:layout_gravity="center"/>
+                android:textSize="30sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
                 android:text="负场数"
-                android:textSize="30sp"
-                android:layout_weight="1"
-                android:layout_gravity="center"/>
+                android:textSize="30sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="年份跨度"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:textSize="30sp"
-                android:layout_gravity="center"/>
+                android:text="年份跨度"
+                android:textSize="30sp"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/detailTeamAbbr"
-                android:textSize="30sp"
-                android:layout_weight="1"
-                android:layout_gravity="center"/>
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:textSize="30sp"/>
+
+            <TextView
                 android:id="@+id/detailTeamLeague"
-                android:textSize="30sp"
-                android:layout_weight="1"
-                android:layout_gravity="center"/>
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/detailTeamFromTo"
-                android:textSize="30sp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:layout_gravity="center"/>
+                android:textSize="30sp"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/detailTeamChampions"
-                android:textSize="30sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:layout_gravity="center"/>
+                android:textSize="30sp"/>
 
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/detailTeamGames"
-                android:textSize="30sp"
-                android:layout_weight="1"
-                android:layout_gravity="center"/>
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:textSize="30sp"/>
+
+            <TextView
                 android:id="@+id/detailTeamWins"
-                android:textSize="30sp"
-                android:layout_weight="1"
-                android:layout_gravity="center"/>
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/detailTeamLoses"
-                android:textSize="30sp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:layout_gravity="center"/>
+                android:textSize="30sp"/>
+
+            <TextView
+                android:id="@+id/detailTeamLoses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:textSize="30sp"/>
+
+            <TextView
+                android:id="@+id/detailTeamFromTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:textSize="30sp"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
