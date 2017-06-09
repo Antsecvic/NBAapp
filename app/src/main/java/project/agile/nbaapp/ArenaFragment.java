@@ -28,12 +28,14 @@ import project.agile.util.SQLdm;
 
 public class ArenaFragment  extends Fragment {
 
-    private List<Arena> arenaList = new ArrayList<>();
+    private List<Arena> arenaList = new ArrayList<Arena>();
+//    private List<Arena> arenaBackList = new ArrayList<Arena>();
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.i("weishenme", "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_common,container,false);
         final ListView arenaListView = (ListView) view.findViewById(R.id.fragment_list);
         SearchView search = (SearchView) view.findViewById(R.id.search);
@@ -49,8 +51,8 @@ public class ArenaFragment  extends Fragment {
                 arena.setArenaName(cursor.getString(cursor.getColumnIndex("Arena")));
                 arena.setArenaLocation(cursor.getString(cursor.getColumnIndex("ArenaLocation")));
                 arenaList.add(arena);
+//                arenaBackList.add(arena);
             }while(cursor.moveToNext());
-
             cursor.close();
         }
 
@@ -79,22 +81,25 @@ public class ArenaFragment  extends Fragment {
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.d("diujiong", "submit");
+                Log.i("diujiong", "submit");
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Log.d("diujiong", newText);
+                Log.d("diujiong", newText + " " + arenaList.size() + "");
                 arenaAdapter.notifyDataSetChanged();
                 if (!TextUtils.isEmpty(newText)){
                     arenaAdapter.getFilter().filter(newText.toString());
+//                    arenaList = arenaBackList;
 
                 }else{
-//                    arenaAdapter.getFilter().filter("");
+                    arenaAdapter.getFilter().filter("");
                     arenaListView.clearTextFilter();
+//                    arenaList = arenaBackList;
 
                 }
+
                 return true;
             }
         });

@@ -87,7 +87,7 @@ public class CoachFragment  extends Fragment {
                     coachAdapter.getFilter().filter(newText.toString());
 
                 }else{
-//                    arenaAdapter.getFilter().filter("");
+                    coachAdapter.getFilter().filter("");
                     coachListView.clearTextFilter();
 
                 }
