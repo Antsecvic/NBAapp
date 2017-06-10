@@ -2,6 +2,7 @@ package project.agile.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class NestedListView extends ListView implements View.OnTouchListener,
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
                          int visibleItemCount, int totalItemCount) {
+        Log.d("Guu", "on scroll");
         if (getAdapter() != null
                 && getAdapter().getCount() > MAXIMUM_LIST_ITEMS_VIEWABLE) {
             if (listViewTouchAction == MotionEvent.ACTION_MOVE) {
@@ -79,6 +81,7 @@ public class NestedListView extends ListView implements View.OnTouchListener,
     }
 
     public boolean onTouch(View v, MotionEvent event) {
+        Log.d("Guu", "touch");
         if (getAdapter() != null
                 && getAdapter().getCount() > MAXIMUM_LIST_ITEMS_VIEWABLE) {
             if (listViewTouchAction == MotionEvent.ACTION_MOVE) {

@@ -41,7 +41,7 @@ public class CoachDetailAdapter extends ArrayAdapter<CoachInOneSeason> {
             view = convertView;
             viewHolder = (ViewHolder) view.getTag();
         }
-        viewHolder.season.setText((Integer.parseInt(coachInOneSeason.getSeason()) - 1)
+        viewHolder.season.setText((int)(Double.parseDouble(coachInOneSeason.getSeason()) - 1)
                 + "-" + coachInOneSeason.getSeason());
         viewHolder.league.setText(coachInOneSeason.getLeague());
         viewHolder.teamAbbr.setText(coachInOneSeason.getTeamAbbr());

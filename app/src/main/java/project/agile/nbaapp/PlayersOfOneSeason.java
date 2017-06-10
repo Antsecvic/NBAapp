@@ -3,9 +3,8 @@ package project.agile.nbaapp;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,10 +14,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import project.agile.Adapter.PlayerDetailAdapter;
 import project.agile.Adapter.PlayerInATeamAdapter;
 import project.agile.Object.PlayerInATeam;
-import project.agile.Object.PlayerInOneSeason;
 import project.agile.util.SQLdm;
 
 public class PlayersOfOneSeason extends AppCompatActivity {
@@ -69,7 +66,7 @@ public class PlayersOfOneSeason extends AppCompatActivity {
 
             }
         });
-        seasonTextView.setText((Integer.parseInt(season)-1)
+        seasonTextView.setText((int)(Double.parseDouble(season)-1)
                 +"-"+season);
         mListView = (ListView)findViewById(R.id.teamOneSeasonList);
         PlayerInATeamAdapter playerInATeamAdapter = new PlayerInATeamAdapter(this,R.layout.players_of_one_season_item,
