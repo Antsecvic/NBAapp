@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".WelcomeActivity"
-            android:label="猫扑NBA"
+            android:label="NBA"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Start">
             <intent-filter>
@@ -24,16 +24,23 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".TabActivity" />
-        <activity android:name=".Detail_PlayerActivity" />
-        <activity android:name=".Detail_TeamActivity" />
-        <activity android:name=".Detail_ArenaActivity" />
-        <activity android:name=".Detail_CoachActivity" />
-		<activity android:name=".PlayersOfOneSeason"/>
+        <activity android:name=".TabActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Detail_PlayerActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Detail_TeamActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Detail_ArenaActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Detail_CoachActivity"
+            android:screenOrientation="portrait"/>
+		<activity android:name=".PlayersOfOneSeason"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Stat2_Activity"
             android:label="数据图表"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

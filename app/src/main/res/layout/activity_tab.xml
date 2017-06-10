@@ -80,7 +80,8 @@
             app:tabIndicatorColor="?attr/colorPrimary"
             app:tabMode="scrollable"
             app:tabSelectedTextColor="?attr/colorPrimary"
-            app:tabTextColor="#999999" />
+            app:tabTextColor="#ffffff"
+            android:background="@drawable/timg2"/>
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"

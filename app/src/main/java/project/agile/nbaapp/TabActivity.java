@@ -33,14 +33,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.Manifest;
 
 import project.agile.DataAnalysis.ReadCSV;
 import project.agile.util.SQLdm;
 import project.agile.util.ToastUtil;
 import project.agile.util.WriteToSD;
-
-import static android.R.attr.permission;
 
 public class TabActivity extends AppCompatActivity {
 
@@ -150,7 +147,7 @@ public class TabActivity extends AppCompatActivity {
 
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("猫扑NBA");
+            actionBar.setTitle("NBA");
             // actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
